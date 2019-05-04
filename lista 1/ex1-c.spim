@@ -1,0 +1,81 @@
+.data
+	#enter: .asciiz "\n"
+	e: .asciiz "E\n"
+	d: .asciiz "D\n"
+	c: .asciiz "C\n"
+	B: .asciiz "B\n"
+	a: .asciiz "A\n"
+	
+.text
+main:
+	
+	li, $v0, 5 		#le nota
+	syscall 
+	
+	move $t0, $v0 		#salva nota em t0
+
+	bge $t0, 86, notaA 	#se nota maior ou igual a 86
+	blt $t0, 86, menor86 	#se nota menor que 86
+		
+	
+notaA:
+	#imprime o que ta na label
+	li $v0, 4
+	la $a0, a
+	syscall
+	
+	# sai do programa
+	li $v0, 10
+	syscall
+	
+menor86:
+	bge $t0, 61, notaB	#se nota maior ou igual a 61
+	blt  $t0, 61, menor61	#se nota menor que 61	
+
+notaB:
+	#imprime o que ta na label
+	li $v0, 4
+	la $a0, B
+	syscall
+	
+	# sai do programa
+	li $v0, 10
+	syscall	
+	
+menor61:
+	bge $t0, 36, notaC 	#se nota maior ou igual a 36
+	blt $t0, 36, menor36	#se nota menor que 36
+	
+notaC:
+	#imprime o que ta na label
+	li $v0, 4
+	la $a0, c
+	syscall
+	
+	# sai do programa
+	li $v0, 10
+	syscall	
+		
+menor36:
+	bge $t0, 1, notaD
+	beqz $t0, notaE						
+										
+notaD:
+	#imprime o que ta na label
+	li $v0, 4
+	la $a0, d
+	syscall
+	
+	# sai do programa
+	li $v0, 10
+	syscall	
+													
+notaE:
+	#imprime o que ta na label
+	li $v0, 4
+	la $a0, e
+	syscall
+	
+	# sai do programa
+	li $v0, 10
+	syscall	

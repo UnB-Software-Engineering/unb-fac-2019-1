@@ -1,0 +1,39 @@
+.data
+	enter: .asciiz "\n"
+.text 
+main:
+	li $t1, 0 		#i (contador)
+	li $t3, 0		#variavel soma
+	
+	li $v0, 5 		#le numero n
+	syscall
+
+	move $t0, $v0 		#salva n em t0
+	
+loop:
+	beq $t0, $t1, imprime 	#quando t1 chegar em t0 (n), vai para imprime
+	
+	li $v0, 5 		#le valor digitado
+	syscall
+	
+	move $t2, $v0 		#salva em t2
+	
+	add $t3, $t3, $t2 	#soma += t2
+
+	addi $t1, $t1, 1 	#incrementa contador
+
+	j loop 			#volta para o inicio do loop
+
+imprime:		
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
+	# imprime espaco
+	li $v0, 4
+	la $a0, enter
+	syscall 
+
+	# sai do programa
+	li $v0, 10
+	syscall

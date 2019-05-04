@@ -1,0 +1,97 @@
+.data
+	enter: .asciiz "\n"
+
+.text
+main:
+	li $t4, 167		#preco minimo se consumo for na faixa a partir de 101 
+	li $t5, 27		#preco minimo se consumo for na faixa de 31 a 100
+	li $t6, 7		#preco minimo
+	
+	li, $v0, 5 		#le consumo
+	syscall 
+	
+	move $t0, $v0 		#salva consumo em t0
+
+	bge $t0, 101, consumo5	#se maior ou igual a 101
+	blt $t0, 101, menor101	#se menor 101
+	
+consumo5: 
+	sub $t2, $t0, 100	#t2 = consumo - 100
+	mulo $t1, $t2, 5	#t1 = t2*5 (5 reais por cada m^3)
+	add $t3, $t4, $t1	#t3 = 167 + t1
+	
+	#imprime o resultado
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
+	# imprime espaco
+	li $v0, 4
+	la $a0, enter
+	syscall 
+	
+	# sai do programa
+	li $v0, 10
+	syscall
+	
+menor101:
+	bge $t0, 31, consumo2		#se maior ou igual a 31
+	blt $t0, 31, menor31		#se menor que 31
+	
+consumo2:
+	sub $t2, $t0, 30	#t2 = consumo - 30
+	mulo $t1, $t2, 2	#t1 = t2*2 (2 reais por cada m^3)
+	add $t3, $t5, $t1	#t3 = 27 + t1
+	
+	#imprime o resultado
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
+	# imprime espaco
+	li $v0, 4
+	la $a0, enter
+	syscall 
+	
+	# sai do programa
+	li $v0, 10
+	syscall
+	
+	
+menor31:
+	bge $t0, 11, consumo1		#se maior ou igual a 11
+	blt $t0, 11, consumoFranquia	#se menor que 11
+	
+consumo1:
+	sub $t2, $t0, 10	#t2 = consumo - 10
+	mulo $t1, $t2, 1	#t1 = t2*1 (1 reais por cada m^3)
+	add $t3, $t6, $t1	#t3 = 7 + t1
+	
+	#imprime o resultado
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
+	# imprime espaco
+	li $v0, 4
+	la $a0, enter
+	syscall 
+	
+	# sai do programa
+	li $v0, 10
+	syscall
+	
+consumoFranquia:
+	#imprime o resultado
+	li $v0, 1
+	move $a0, $t6
+	syscall
+	
+	# imprime espaco
+	li $v0, 4
+	la $a0, enter
+	syscall 
+	
+	# sai do programa
+	li $v0, 10
+	syscall	

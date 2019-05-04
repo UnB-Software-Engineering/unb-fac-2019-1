@@ -1,0 +1,34 @@
+.data
+	Esp: .asciiz "\n"
+.text 
+main:
+	# le numero 1
+	li $v0, 5
+	syscall
+	
+	# salva em t0
+	move $t0, $v0
+	
+	# le numero 2	
+	li $v0, 5
+	syscall
+
+	# salva em t1	
+	move $t1, $v0
+	
+	# salva a sub de t0 e t1 em t2
+	sub $t2, $t0, $t1
+	
+	# imprime o resultado
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	# imprime espaco
+	li $v0, 4
+	la $a0, Esp
+	syscall 
+
+	# sai
+	li $v0, 10
+	syscall	
